@@ -1,0 +1,144 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "osx-default",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/osx/debug",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+        "VCPKG_INSTALLED_DIR": "${sourceDir}/build/osx/vcpkg_installed",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/osx/release/package",
+        "CMAKE_MACOSX_RPATH": true,
+        "CMAKE_INSTALL_RPATH": "/usr/local/lib"
+      }
+    },
+    {
+      "name": "osx-debug",
+      "inherits": "osx-default",
+      "binaryDir": "${sourceDir}/build/osx/debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "osx-release",
+      "inherits": "osx-default",
+      "binaryDir": "${sourceDir}/build/osx/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "ios-default",
+      "generator": "Xcode",
+      "binaryDir": "${sourceDir}/build/ios/debug",
+      "cacheVariables": {
+        "CMAKE_SYSTEM_NAME": "iOS",
+        "CMAKE_OSX_DEPLOYMENT_TARGET": "17",
+        "CMAKE_XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH": "NO",
+        "CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_STYLE": "AUTOMATIC",
+        "CMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM": "LW57Q4U5U7",
+        "CMAKE_XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER": "io.deadbeef.nova",
+        "CMAKE_IOS_INSTALL_COMBINED": "YES",
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+        "VCPKG_INSTALLED_DIR": "${sourceDir}/build/ios/vcpkg_installed",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/ios/release/package"
+      }
+    },
+    {
+      "name": "ios-debug",
+      "inherits": "ios-default",
+      "binaryDir": "${sourceDir}/build/ios/debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "ios-release",
+      "inherits": "ios-default",
+      "binaryDir": "${sourceDir}/build/ios/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "osx-debug",
+      "configurePreset": "osx-debug"
+    },
+    {
+      "name": "osx-release",
+      "configurePreset": "osx-release"
+    },
+    {
+      "name": "ios-debug",
+      "configurePreset": "ios-debug"
+    },
+    {
+      "name": "ios-release",
+      "configurePreset": "ios-release"
+    }
+  ],
+  "workflowPresets": [
+    {
+      "description": "OS X debug build",
+      "name": "osx-debug",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "osx-debug"
+        },
+        {
+          "type": "build",
+          "name": "osx-debug"
+        }
+      ]
+    },
+    {
+      "description": "OS X release build",
+      "name": "osx-release",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "osx-release"
+        },
+        {
+          "type": "build",
+          "name": "osx-release"
+        }
+      ]
+    },
+    {
+      "description": "iOS debug build",
+      "name": "ios-debug",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "ios-debug"
+        },
+        {
+          "type": "build",
+          "name": "ios-debug"
+        }
+      ]
+    },
+    {
+      "description": "iOS release build",
+      "name": "ios-release",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "ios-release"
+        },
+        {
+          "type": "build",
+          "name": "ios-release"
+        }
+      ]
+    }
+  ]
+}
